@@ -16,6 +16,7 @@ public class BlockMoblightLantern extends Block {
         this.setBlockTextureName("moblight:moblight_lantern");
         this.setHardness(2.0F);
         this.setResistance(5.0F);
+        this.setLightLevel(1.0F);
         this.setCreativeTab(CreativeTabs.tabDecorations);
     }
 
@@ -27,5 +28,18 @@ public class BlockMoblightLantern extends Block {
     @Override
     public TileEntity createTileEntity(World world, int metadata) {
         return new TileEntityMoblightLantern();
+    }
+
+    @Override
+    public void breakBlock(World world, int x, int y, int z, Block block, int metadata) {
+        if (!world.isRemote) {
+            TileEntity tileEntity = world.getTileEntity(x, y, z);
+
+            if (tileEntity instanceof TileEntityMoblightLantern) {
+                ((TileEntityMoblightLantern) tileEntity).removeOwnedLights();
+            }
+        }
+
+        super.breakBlock(world, x, y, z, block, metadata);
     }
 }
