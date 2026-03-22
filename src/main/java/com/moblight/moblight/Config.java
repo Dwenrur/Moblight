@@ -1,4 +1,4 @@
-package com.myname.mymodid;
+package com.moblight.moblight;
 
 import java.io.File;
 
